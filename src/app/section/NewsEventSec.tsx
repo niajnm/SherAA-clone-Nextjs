@@ -1,32 +1,19 @@
-'use client';
+
 
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
-
-const newsItems = [
-  {
-    title: 'Conflict and Development in the Myanmar-China Border Region',
-    description:
-      'The Asia, a dynamic and forward-thinking organization, is strategically headquartered in San Francisco. Surrounded by the innovative energy of Silicon Valley...',
-    image: '/bg.png',
-  },
-  {
-    title: 'Promoting Women’s Entrepreneurship in Bangladesh',
-    description:
-      'Headquartered in San Francisco, with an office in Washington, DC, The Asia.',
-    image: '/bg.png',
-  },
-  {
-    title: '2022 Tatoli! Public Perception Survey',
-    description:
-      'Headquartered in San Francisco, with an office in Washington, DC, The Asia.',
-    image: '/bg.png',
-  },
-];
+import { useNewsEventList } from '@/hooks/useNewsEventList';
 
 export default function NewsEventsSection() {
+  const { data, isLoading, isError } = useNewsEventList(10, '', '', '');
+
+  if (isLoading) return <p className="px-6 py-12">Loading...</p>;
+  if (isError) return <p className="px-6 py-12 text-red-500">Failed to load news events.</p>;
+
+  const newsItems = data?.newsEvents.nodes || [];
+
   return (
-    <section className="px-6 py-12 md:px-12 lg:px-24">
+    <section className="px-6 py-12 md:px-12 lg:px-24   ">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-2xl font-bold text-sky-800">News & Events</h2>
@@ -40,19 +27,23 @@ export default function NewsEventsSection() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {newsItems.map((item, idx) => (
-          <div key={idx} className="bg-white rounded-lg shadow-sm overflow-hidden">
+        {newsItems.map((item) => (
+          <div key={item.databaseId} className="bg-white rounded-lg shadow-sm overflow-hidden">
             <Image
-              src={item.image}
-              alt={item.title}
+              src={item.newsEventFields.image?.node?.sourceUrl || '/placeholder.png'}
+              alt={item.newsEventFields.image?.node?.caption || item.newsEventFields.title}
               width={400}
-              height={200}
+              height={300}
               className="w-full h-48 object-cover"
             />
-            <div className="p-4">
-              <h3 className="font-semibold text-black mb-2">{item.title}</h3>
-              <p className="text-gray-600 text-sm">{item.description}</p>
-            </div>
+        <div className="p-4">
+  <h3 className="font-semibold text-black mb-2">{item.newsEventFields.title}</h3>
+  <div
+    className="text-gray-600 line-clamp-3  text-sm"
+    dangerouslySetInnerHTML={{ __html: item.newsEventFields.description }}
+  />
+</div>
+
           </div>
         ))}
       </div>

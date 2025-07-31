@@ -8,27 +8,8 @@ import CoalitionMembers from "./section/memberCard";
 import NewsEventsSection from "./section/NewsEventSec";
 import PublicationsSection from "./section/Publication";
 import MobilizingSection from "./section/Mobilizing";
+import VideoSection from "./section/test";
 
-const items = [
-  {
-    id: 1,
-    title: "Item 1",
-    description: "This is the first item.",
-    image: "https://picsum.photos/200",
-  },
-  {
-    id: 2,
-    title: "Item 2",
-    description: "This is the second item.",
-    image: "https://picsum.photos/200",
-  },
-  {
-    id: 3,
-    title: "Item 3",
-    description: "This is the third item.",
-    image: "https://picsum.photos/200",
-  },
-];
 
 export default function Home() {
 
@@ -51,19 +32,20 @@ export default function Home() {
         </div>
 
         <ClimateHero
-          title="Custom Climate Title"
-          subtitle="Your custom subtitle here"
+
         />
         <div>
           <CoalitionMembers />
         </div>
-      <PublicationsSection />
+        <PublicationsSection />
 
-      {/* other sections */}
-      <NewsEventsSection />
-            <MobilizingSection />
+        {/* other sections */}
+        <NewsEventsSection />
+        <MobilizingSection />
 
-  
+        <div>
+          <VideoSection />
+        </div>
 
       </div>
     </div>

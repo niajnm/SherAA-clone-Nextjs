@@ -1,105 +1,67 @@
+// CoalitionMembers.Client.tsx
+
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useMemberCategoryList } from '@/hooks/useMemberCategories';
 
-interface MemberCard {
-  title: string;
-  description: string;
-  color: 'blue' | 'red' | 'coral';
-}
 
-interface CoalitionMembersProps {
-  sectionTitle?: string;
-  sectionSubtitle?: string;
-  members?: MemberCard[];
-}
+const CoalitionMembers = () => {
+  const { data, isLoading, isError } = useMemberCategoryList();
 
-const CoalitionMembers: React.FC<CoalitionMembersProps> = ({
-  sectionTitle = "Coalition Members",
-  sectionSubtitle = "The leadership and staff play key roles in implementing its programs and projects throughout Asia.",
-  members = [
+  if (isLoading) {
+    return <section className="py-16 px-4 text-center">Loading...</section>;
+  }
 
-    
-    {
-      title: "Research",
-      description: "This paper details the opportunities and challenges facing civil society actors working in peacebuilding or peace activism in South and Southeast Asia...",
-      color: "blue"
-    },
-    {
-      title: "Policy & Advocacy", 
-      description: "This paper details the opportunities and challenges facing civil society actors working in peacebuilding or peace activism in South and Southeast Asia...",
-      color: "red"
-    },
-    {
-      title: "Development",
-      description: "This paper details the opportunities and challenges facing civil society actors working in peacebuilding or peace activism in South and Southeast Asia...",
-      color: "blue"
-    },
-    {
-      title: "Feminist Leadership",
-      description: "This paper details the opportunities and challenges facing civil society actors working in peacebuilding or peace activism in South and Southeast Asia...",
-      color: "red"
-    },
-    {
-      title: "Media",
-      description: "This paper details the opportunities and challenges facing civil society actors working in peacebuilding or peace activism in South and Southeast Asia...",
-      color: "red"
-    },
-    {
-      title: "Youth",
-      description: "This paper details the opportunities and challenges facing civil society actors working in peacebuilding or peace activism in South and Southeast Asia...",
-      color: "red"
-    },
-    {
-      title: "Donors",
-      description: "This paper details the opportunities and challenges facing civil society actors working in peacebuilding or peace activism in South and Southeast Asia...",
-      color: "blue"
-    }
-  ]
-}) => {
+  if (isError) {
+    return <section className="py-16 px-4 text-center text-red-500">Failed to load members.</section>;
+  }
+
+  const members =
+    data?.memberCategories.nodes.map((node) => ({
+      title: node.memberCategoryFields.name,
+      description: node.memberCategoryFields.description,
+      color: 'blue' as const, // default or dynamic if available
+    })) || [];
+
   const getCardColors = (color: 'blue' | 'red' | 'coral') => {
     switch (color) {
       case 'blue':
         return {
           title: 'text-blue-600',
-          link: 'text-blue-600 hover:text-blue-700'
+          link: 'text-blue-600 hover:text-blue-700',
         };
       case 'red':
         return {
           title: 'text-red-500',
-          link: 'text-blue-600 hover:text-blue-700'
+          link: 'text-blue-600 hover:text-blue-700',
         };
       case 'coral':
         return {
           title: 'text-coral-500',
-          link: 'text-blue-600 hover:text-blue-700'
+          link: 'text-blue-600 hover:text-blue-700',
         };
       default:
         return {
           title: 'text-blue-600',
-          link: 'text-blue-600 hover:text-blue-700'
+          link: 'text-blue-600 hover:text-blue-700',
         };
     }
   };
 
   return (
     <section className="bg-gray-50 py-16 px-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-24">
         {/* Header */}
         <div className="mb-12">
-          <p className="text-red-500 text-sm font-medium uppercase tracking-wide mb-2">
-            MEMBERS
-          </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-blue-600 mb-4">
-            {sectionTitle}
-          </h2>
+          <p className="text-red-500 text-sm font-medium uppercase tracking-wide mb-2">MEMBERS</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-600 mb-4">Coalition Members</h2>
           <p className="text-gray-600 text-lg max-w-2xl">
-            {sectionSubtitle}
+            The leadership and staff play key roles in implementing its programs and projects throughout Asia.
           </p>
         </div>
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Member Cards */}
           {members.map((member, index) => {
             const colors = getCardColors(member.color);
             return (
@@ -110,10 +72,12 @@ const CoalitionMembers: React.FC<CoalitionMembersProps> = ({
                 <h3 className={`text-xl font-bold mb-4 ${colors.title} group-hover:text-opacity-80 transition-colors`}>
                   {member.title}
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
                   {member.description}
                 </p>
-                <button className={`inline-flex items-center space-x-2 ${colors.link} font-medium text-sm transition-all group-hover:translate-x-1`}>
+                <button
+                  className={`inline-flex items-center space-x-2 ${colors.link} font-medium text-sm transition-all group-hover:translate-x-1`}
+                >
                   <span>Learn More</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>

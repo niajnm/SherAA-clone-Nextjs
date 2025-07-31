@@ -81,10 +81,10 @@ function Header() {
 function Brand() {
   return (
     <div className="flex items-center space-x-2">
-      <Image src="/logo.svg" width={32} height={32} alt="SheRAA Logo" />
+      <Image src="/logo.svg" width={50} height={50} alt="SheRAA Logo" />
       <div>
-        <h1 className="text-xl font-bold text-cyan-800">SheRAA</h1>
-        <p className="text-xs text-cyan-800">
+        <h1 className="text-3xl font-bold text-cyan-800">SheRAA</h1>
+        <p className="text-xl text-cyan-800">
           Women’s Climate Resilience and Adaptation Alliance
         </p>
       </div>
@@ -114,7 +114,7 @@ function Footer() {
 
         {/* Company */}
         <div>
-          <h4 className="text-lg font-semibold mb-4">Company</h4>
+          <h4 className="text-lg font-semibold  text-red-700 mb-4">Company</h4>
           <ul className="space-y-2 text-sm">
             {['About', 'Leadership', 'Blog', 'Careers', 'Referral Program', 'Community'].map(item => (
               <li key={item}>
@@ -128,7 +128,7 @@ function Footer() {
 
         {/* Product */}
         <div>
-          <h4 className="text-lg font-semibold mb-4">Product</h4>
+          <h4 className="text-lg font-semibold text-red-700 mb-4">Product</h4>
           <ul className="space-y-2 text-sm">
             {['Overview', 'Features', 'Pricing', 'Documentation', 'Tools & Integration', 'Releases'].map(item => (
               <li key={item}>
@@ -142,7 +142,7 @@ function Footer() {
 
         {/* Support */}
         <div>
-          <h4 className="text-lg font-semibold mb-4">Support</h4>
+          <h4 className="text-lg font-semibold  text-red-700 mb-4">Support</h4>
           <ul className="space-y-2 text-sm">
             {['Help centre', 'FAQ', 'Contact', 'Press', 'Status'].map(item => (
               <li key={item}>
